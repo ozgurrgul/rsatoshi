@@ -12,6 +12,7 @@ import { WhaleBuyPressure } from "../components/WhaleBuyPressure";
 import { WhalePieChart } from "../components/WhalePieChart";
 import { mapTradeCmsDataBySlug } from "../mapper/mapTradeCmsDataBySlug";
 import { moneyFormatter } from "../utils/moneyFormatter";
+import { GetServerSidePropsContext } from "next";
 
 export type MainProps = {
   allWhaleTrades: Awaited<ReturnType<typeof getAllWhaleTrades>>;
@@ -66,7 +67,7 @@ export default function Home({
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const [
     allWhaleTrades,
     biggestWhaleTrades,
@@ -80,6 +81,11 @@ export async function getServerSideProps() {
     getWhaleTradesStats(),
     getExchangesCms(),
   ]);
+
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59"
+  );
 
   return {
     props: {
