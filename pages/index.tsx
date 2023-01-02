@@ -57,7 +57,7 @@ export default function Home({
         </CardWindow>
         <CardWindow title="Exchanges by whale trade count">
           <WhalePieChart
-            subtext={`Based on last ${whaleStats.byVolume.exchangesDataSetLength} whale trades`}
+            subtext={`Based on last ${whaleStats.byCount.exchangesDataSetLength} whale trades`}
             tooltipFormatter={(e: any) => e}
             exchanges={whaleStats.byCount.exchanges}
           />
